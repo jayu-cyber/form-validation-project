@@ -6,7 +6,7 @@ This is a Form Validation project built using HTML, CSS (Bootstrap), and JavaScr
 - Validates Full Name (minimum 5 characters)
 - Validates Email (must contain '@')
 - Validates Phone Number (10 digits, not '123456789')
-- Validates Password (min 8 chars, not 'password', not user's name)
+- Validates Password (min 8 chars, not 'password', not user's name, must contain number and special char)
 - Confirm Password match check
 - Real-time validation feedback
 

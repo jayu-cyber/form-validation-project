@@ -5,10 +5,12 @@ const email = document.getElementById('email');
 const phone = document.getElementById('phone');
 const password = document.getElementById('password');
 const confirmPassword = document.getElementById('confirmPassword');
+const togglePassword = document.getElementById('togglePassword');
+const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
 
 // Helper function to show error
 function showError(input, message) {
-    const errorDiv = input.nextElementSibling; // The .invalid-feedback div
+    const errorDiv = input.parentElement.querySelector('.invalid-feedback'); // Updated to find .invalid-feedback correctly
     input.classList.add('is-invalid');
     input.classList.remove('is-valid');
     errorDiv.innerText = message;
@@ -17,7 +19,7 @@ function showError(input, message) {
 
 // Helper function to show success
 function showSuccess(input) {
-    const errorDiv = input.nextElementSibling;
+    const errorDiv = input.parentElement.querySelector('.invalid-feedback');
     input.classList.remove('is-invalid');
     input.classList.add('is-valid');
     errorDiv.innerText = '';
@@ -75,6 +77,12 @@ function validatePassword() {
     } else if (nameValue && passwordValue.toLowerCase() === nameValue.toLowerCase()) {
         showError(password, 'Password cannot be the name of the user');
         return false;
+    } else if (!/[0-9]/.test(passwordValue)) {
+        showError(password, 'Password must contain at least one number');
+        return false;
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(passwordValue)) {
+        showError(password, 'Password must contain at least one special character');
+        return false;
     } else {
         showSuccess(password);
         return true;
@@ -112,6 +120,21 @@ password.addEventListener('change', () => {
     if (confirmPassword.value) {
         validateConfirmPassword();
     }
+});
+
+// Toggle Password Visibility
+togglePassword.addEventListener('click', function () {
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    this.querySelector('i').classList.toggle('bi-eye');
+    this.querySelector('i').classList.toggle('bi-eye-slash');
+});
+
+toggleConfirmPassword.addEventListener('click', function () {
+    const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPassword.setAttribute('type', type);
+    this.querySelector('i').classList.toggle('bi-eye');
+    this.querySelector('i').classList.toggle('bi-eye-slash');
 });
 
 
